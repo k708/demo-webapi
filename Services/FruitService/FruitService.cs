@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using demo_webapi.Models;
 
 namespace demo_webapi.Services.FruitService
@@ -11,18 +12,18 @@ namespace demo_webapi.Services.FruitService
             new Fruit { Id = 2, Name = "Banana" }
         };
         
-        public List<Fruit> AddFruit(Fruit newFruit)
+        public async Task<List<Fruit>> AddFruit(Fruit newFruit)
         {
             _fruits.Add(newFruit);
             return _fruits;
         }
 
-        public List<Fruit> GetAllFruits()
+        public async Task<List<Fruit>> GetAllFruits()
         {
             return _fruits;
         }
 
-        public Fruit GetFruitById(int id)
+        public async Task<Fruit> GetFruitById(int id)
         {
             var fruit = _fruits.FirstOrDefault(f => f.Id == id);
             return fruit;

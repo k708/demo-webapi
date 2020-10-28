@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using demo_webapi.Models;
 using demo_webapi.Services.FruitService;
 using Microsoft.AspNetCore.Mvc;
@@ -16,18 +17,18 @@ namespace demo_webapi.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get() {
-            return Ok(_fruitService.GetAllFruits());
+        public async Task<IActionResult> Get() {
+            return Ok(await _fruitService.GetAllFruits());
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetSingle(int id) {
-            return Ok(_fruitService.GetFruitById(id));
+        public async Task<IActionResult> GetSingle(int id) {
+            return Ok(await _fruitService.GetFruitById(id));
         }
-        
+
         [HttpPost]
-        public IActionResult AddFruit(Fruit newFruit) {
-            return Ok(_fruitService.AddFruit(newFruit));
+        public async Task<IActionResult> AddFruit(Fruit newFruit) {
+            return Ok(await _fruitService.AddFruit(newFruit));
         }
     }
 }

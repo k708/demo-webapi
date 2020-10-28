@@ -11,22 +11,28 @@ namespace demo_webapi.Services.FruitService
             new Fruit { Id = 1, Name = "Apple" },
             new Fruit { Id = 2, Name = "Banana" }
         };
-        
-        public async Task<List<Fruit>> AddFruit(Fruit newFruit)
+
+        public async Task<ServiceResponse<List<Fruit>>> AddFruit(Fruit newFruit)
         {
+            ServiceResponse<List<Fruit>> response = new ServiceResponse<List<Fruit>>();
             _fruits.Add(newFruit);
-            return _fruits;
+            response.Data = _fruits;
+            return response;
         }
 
-        public async Task<List<Fruit>> GetAllFruits()
+        public async Task<ServiceResponse<List<Fruit>>> GetAllFruits()
         {
-            return _fruits;
+            ServiceResponse<List<Fruit>> response = new ServiceResponse<List<Fruit>>();
+            response.Data = _fruits;
+            return response;
         }
 
-        public async Task<Fruit> GetFruitById(int id)
+        public async Task<ServiceResponse<Fruit>> GetFruitById(int id)
         {
+            ServiceResponse<Fruit> response = new ServiceResponse<Fruit>();
             var fruit = _fruits.FirstOrDefault(f => f.Id == id);
-            return fruit;
+            response.Data = fruit;
+            return response;
         }
     }
 }

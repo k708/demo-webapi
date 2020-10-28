@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using demo_webapi.Models;
+using demo_webapi.Models.Dtos.Fruit;
 using demo_webapi.Services.FruitService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +15,6 @@ namespace demo_webapi.Controllers
         {
             _fruitService = fruitService;
         }
-
         [HttpGet]
         public async Task<IActionResult> Get() {
             return Ok(await _fruitService.GetAllFruits());
@@ -27,7 +26,7 @@ namespace demo_webapi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddFruit(Fruit newFruit) {
+        public async Task<IActionResult> AddFruit(AddFruitDto newFruit) {
             return Ok(await _fruitService.AddFruit(newFruit));
         }
     }

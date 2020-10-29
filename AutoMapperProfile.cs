@@ -9,7 +9,7 @@ namespace demo_webapi
         public AutoMapperProfile()
         {
          CreateMap<Fruit, GetFruitDto>();
-         CreateMap<AddFruitDto, Fruit>();   
+         CreateMap<AddFruitDto, Fruit>();
         }
     }
 }

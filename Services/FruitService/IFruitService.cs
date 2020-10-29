@@ -10,5 +10,7 @@ namespace demo_webapi.Services.FruitService
         Task<ServiceResponse<List<GetFruitDto>>> GetAllFruits();
         Task<ServiceResponse<GetFruitDto>> GetFruitById(int id);
         Task<ServiceResponse<List<GetFruitDto>>> AddFruit(AddFruitDto newFruit);
+        Task<ServiceResponse<List<GetFruitDto>>> UpdateFruit(UpdateFruitDto updatedFruit);
+        Task<ServiceResponse<List<GetFruitDto>>> DeleteFruit(int id);
     }
 }

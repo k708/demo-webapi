@@ -29,5 +29,23 @@ namespace demo_webapi.Controllers
         public async Task<IActionResult> AddFruit(AddFruitDto newFruit) {
             return Ok(await _fruitService.AddFruit(newFruit));
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateFruit(UpdateFruitDto updatedFruit) {
+            var response = await _fruitService.UpdateFruit(updatedFruit);
+            if (response.Data == null) {
+                return NotFound(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteFruit(int id) {
+            var response = await _fruitService.DeleteFruit(id);
+            if (response.Data == null) {
+                return NotFound(response);
+            }
+            return Ok(response);
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,16 +22,6 @@ namespace demo_webapi.Services.FruitService
             _mapper = mapper;
         }
 
-        public async Task<ServiceResponse<List<GetFruitDto>>> AddFruit(AddFruitDto newFruit)
-        {
-            ServiceResponse<List<GetFruitDto>> response = new ServiceResponse<List<GetFruitDto>>();
-            Fruit fruit = _mapper.Map<Fruit>(newFruit);
-            fruit.Id = _fruits.Max(c => c.Id) + 1;
-            _fruits.Add(fruit);
-            response.Data = (_fruits.Select(c => _mapper.Map<GetFruitDto>(c))).ToList();
-            return response;
-        }
-
         public async Task<ServiceResponse<List<GetFruitDto>>> GetAllFruits()
         {
             ServiceResponse<List<GetFruitDto>> response = new ServiceResponse<List<GetFruitDto>>();
@@ -45,6 +36,56 @@ namespace demo_webapi.Services.FruitService
             ServiceResponse<GetFruitDto> response = new ServiceResponse<GetFruitDto>();
             var fruit = _mapper.Map<GetFruitDto>(_fruits.FirstOrDefault(f => f.Id == id));
             response.Data = fruit;
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<GetFruitDto>>> AddFruit(AddFruitDto newFruit)
+        {
+            ServiceResponse<List<GetFruitDto>> response = new ServiceResponse<List<GetFruitDto>>();
+            Fruit fruit = _mapper.Map<Fruit>(newFruit);
+            fruit.Id = _fruits.Max(c => c.Id) + 1;
+            _fruits.Add(fruit);
+            response.Data = (_fruits.Select(c => _mapper.Map<GetFruitDto>(c))).ToList();
+            return response;
+        }
+        public async Task<ServiceResponse<List<GetFruitDto>>> UpdateFruit(UpdateFruitDto updatedFruit)
+        {
+            ServiceResponse<List<GetFruitDto>> response = new ServiceResponse<List<GetFruitDto>>();
+            try
+            {
+                Fruit fruit = _fruits.FirstOrDefault(p => p.Id == updatedFruit.Id);
+                fruit.Name = updatedFruit.Name;
+                fruit.BestSeason = updatedFruit.BestSeason;
+                fruit.Price = updatedFruit.Price;
+                fruit.Stock = updatedFruit.Stock;
+                response.Data = (_fruits.Where(p => p.Stock > 0)
+                                        .Select(c => _mapper.Map<GetFruitDto>(c))
+                                ).ToList();
+            }
+            catch (Exception e)
+            {
+                response.Sccess = false;
+                response.Message = e.Message;
+            }
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<GetFruitDto>>> DeleteFruit(int id)
+        {
+            ServiceResponse<List<GetFruitDto>> response = new ServiceResponse<List<GetFruitDto>>();
+            try
+            {
+                Fruit fruit = _fruits.First(p => p.Id == id);
+                _fruits.Remove(fruit);
+                response.Data = (_fruits.Where(p => p.Stock > 0)
+                                        .Select(c => _mapper.Map<GetFruitDto>(c))
+                                ).ToList();
+            }
+            catch (Exception e)
+            {
+                response.Sccess = false;
+                response.Message = e.Message;
+            }
             return response;
         }
     }

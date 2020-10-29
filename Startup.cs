@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using demo_webapi.Database;
 using demo_webapi.Services.FruitService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,7 @@ namespace demo_webapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<DatabaseContext>();
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IFruitService, FruitService>();
         }
